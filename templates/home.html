@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Farm Care</title>
+    <link rel="icon" href="../static/images/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #0f0c29 0%, #302b63 60%, #24243e 100%);
+            position: relative;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 60% 40%, #ffffff22 0%, #302b63 60%, transparent 100%), 
+                        url('../static/images/leaf-bg.png'), 
+                        linear-gradient(120deg, #0f0c29 0%, #302b63 60%, #24243e 100%);
+            background-size: 600px, cover, cover;
+            background-repeat: no-repeat;
+            opacity: 0.18;
+            z-index: 0;
+        }
+        .floating-leaf {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            width: 80px;
+            opacity: 0.22;
+            z-index: 1;
+            animation: floatLeaf 6s infinite ease-in-out;
+        }
+        @keyframes floatLeaf {
+            0%, 100% { transform: translateY(0) rotate(-10deg);}
+            50% { transform: translateY(18px) rotate(10deg);}
+        }
+        .navbar {
+            background: #181824 !important;
+            border-bottom: 2px solid #43cea2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar-brand {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff !important;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand img {
+            margin-right: 14px;
+            filter: drop-shadow(0 2px 4px rgba(86,171,47,0.18));
+        }
+        .carousel-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            position: relative;
+            z-index: 2;
+            width: 100vw;
+        }
+        .carousel-text-title,
+        .carousel-text-subtitle,
+        .form-box h1,
+        .btn-success,
+        .input-box input[type="file"] {
+            color: #fff !important;
+        }
+        .carousel-text-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 1.2rem;
+            letter-spacing: 2px;
+            animation: fadeInDown 1s;
+        }
+        .carousel-text-subtitle {
+            font-size: 1.35rem;
+            font-weight: 500;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            animation: fadeIn 1.2s;
+        }
+        .form-box {
+            background: rgba(255,255,255,0.78);
+            border-radius: 28px;
+            box-shadow: 0 12px 40px 0 #43cea244, 0 2px 16px #56ab2f22;
+            padding: 3.2rem 2.5rem;
+            width: 100%;
+            max-width: 650px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(14px);
+            border: 1.5px solid #43cea244;
+            animation: fadeInUp 1.3s;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .form-box h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .input-box input[type="file"] {
+            border: none;
+            background: #22243a;
+            padding: 1rem;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 1.08rem;
+            transition: box-shadow 0.2s;
+            box-shadow: 0 2px 8px #43cea222;
+        }
+        .input-box input[type="file"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #43cea244;
+        }
+        .btn-success {
+            background: linear-gradient(90deg, #f9d423 0%, #43cea2 60%, #56ab2f 100%);
+            border: none;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px #43cea244;
+            transition: background 0.2s, transform 0.2s;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-success::after {
+            content: "";
+            position: absolute;
+            left: -75%;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: rgba(255,255,255,0.18);
+            transform: skewX(-20deg);
+            transition: left 0.4s;
+        }
+        .btn-success:hover::after {
+            left: 120%;
+        }
+        .btn-success:hover {
+            background: linear-gradient(90deg, #56ab2f 0%, #43cea2 60%, #f9d423 100%);
+            transform: scale(1.06);
+        }
+        .result-container {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .result-box {
+            background: #22243a;
+            border-radius: 22px;
+            box-shadow: 0 2px 24px #43cea244;
+            padding: 1.7rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            animation: fadeInUp 1.5s;
+            backdrop-filter: blur(8px);
+            border: 1.5px solid #43cea244;
+        }
+        .result-img-container {
+            margin-bottom: 1rem;
+        }
+        .result-image {
+            max-width: 130px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px #43cea244;
+            border: 2px solid #43cea244;
+            background: #e8f5e9;
+            animation: popIn 0.8s;
+        }
+        .result-text h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+            color: #000 !important;
+        }
+        .result-text p {
+            font-size: 1.05rem;
+            margin-bottom: 0.3rem;
+            text-align: center;
+            color: #000 !important;
+        }
+        @media (max-width: 600px) {
+            .carousel-text-title { font-size: 2rem; }
+            .form-box { padding: 1.2rem 0.5rem; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @keyframes fadeIn {
+            from { opacity: 0;}
+            to { opacity: 1;}
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.7);}
+            70% { opacity: 1; transform: scale(1.1);}
+            100% { opacity: 1; transform: scale(1);}
+        }
+    </style>
+    {% if result %}
+    <style>
+        .form-box {
+            animation: pulseCard 1.2s;
+        }
+        @keyframes pulseCard {
+            0% { box-shadow: 0 0 0 0 #43cea244; }
+            50% { box-shadow: 0 0 40px 10px #43cea244; }
+            100% { box-shadow: 0 0 0 0 #43cea244; }
+        }
+    </style>
+    {% endif %}
+</head>
+<body>
+    <svg class="floating-leaf" viewBox="0 0 64 64" fill="none">
+      <path d="M32 2C32 2 58 18 58 32C58 46 32 62 32 62C32 62 6 46 6 32C6 18 32 2 32 2Z" fill="#43cea2" stroke="#56ab2f" stroke-width="2"/>
+    </svg>
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="../static/images/logo.svg" alt="" width="36" height="28" class="d-inline-block align-text-top">
+            Smart Farm Care
+          </a>
+        </div>
+    </nav>
+    <div class="carousel-text-wrapper">
+        <h1 class="carousel-text-title">Smart Farm Care</h1>
+        <div class="carousel-text-subtitle">
+            Diagnose plant diseases instantly from leaf images.<br>
+            <span style="font-size:1rem;color:#43cea2;font-weight:600;">Grow healthy, grow smart.</span>
+        </div>
+        <div class="form-box">
+            <form action="/upload/" method="POST" enctype="multipart/form-data">
+                <h1>Upload Image</h1>
+                <div class="input-box d-flex mb-3">
+                    <input type="file" accept="image/png, image/jpeg" name="img" required>
+                </div>
+                <div class="input-box d-flex">
+                    <button type="submit" class="btn btn-success m-auto">Upload</button>
+                </div>
+            </form>
+            {% if result %}
+            <div class="result-container">
+                <div class="result-box">
+                    <div class="result-img-container">
+                        <img src="{{imagepath}}" alt="uploaded image" class="result-image">
+                    </div>
+                    <div class="result-text">
+                        <h3>{{prediction['name']}}</h3>
+                        <p>{{prediction['cause']}}</p>
+                        <p>{{prediction['cure']}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <script src="../static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
