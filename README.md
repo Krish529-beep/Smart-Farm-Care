@@ -6,7 +6,9 @@ A web application for diagnosing plant diseases from leaf images using machine l
 
 1. Download the pre-trained model from [Google Drive link](https://drive.google.com/file/d/1Ond7UzrNOfdAXWedjlZr2sDXYU6MRBuj/view?usp=sharing) and place it in the `models/` directory.
 
-2. Install required packages: `pip install flask tensorflow numpy`
+2. Add model to the model folder.
+
+3. Install required packages: `pip install flask tensorflow numpy`
 
 ## Usage
 
